@@ -2,4 +2,125 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --background-color: #1e1e1e;
+  --screen-color: #acacac;
+  --display-color: var(--background-color);
+  --calculator-body-color: #4b4b4b;
+  --logo-color: #d1f498;
+  --button-color: #7b7b7b;
+  --button-font-color: var(--background-color);
+  --off-color: #b03e4c;
+  --on-color: #85b03e;
+  --operator-color: #3eb0a1;
+}
+
+@font-face {
+  src: url(DSEG7ClassicMini-Regular.woff) format("woff");
+  font-family: "DSEG";
+}
+
+body,
+body * {
+  display: flex;
+}
+
+script {
+  display: none;
+}
+
+body {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-color);
+  height: 100vh;
+}
+
+.calculator {
+  flex-direction: column;
+  align-items: stretch;
+  box-shadow: #111 1px 1px 4px;
+  border-style: outset;
+  border-color: var(--calculator-body-color);
+  border-radius: 16px;
+  background-color: var(--calculator-body-color);
+  width: 300px;
+  height: 485px;
+  color: var(--background-color);
+}
+
+.display {
+  flex: 0.16666;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 8px;
+  margin-bottom: 4px;
+  box-shadow: inset #666 2px 2px 4px;
+  border-style: inset;
+  border-color: var(--calculator-body-color);
+  border-radius: 8px;
+  background-color: var(--screen-color);
+  padding-right: 6px;
+  color: var(--display-color);
+  font-size: 2em;
+  font-family: "DSEG", monospace;
+  text-shadow: #444 2px 2px 2px;
+}
+
+.logo {
+  margin-left: 16px;
+  color: var(--logo-color);
+  font-style: normal;
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.button-container {
+  flex: 1;
+  flex-direction: column;
+  margin: 8px;
+  margin-top: 4px;
+}
+
+.button-row {
+  flex: 1;
+}
+
+.button {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  margin: 4px;
+  box-shadow: #444 2px 2px 2px;
+  border-color: var(--button-color);
+  border-radius: 8px;
+  background-color: var(--button-color);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: "Aldrich", sans-serif;
+}
+
+.off {
+  border-color: var(--off-color);
+  background-color: var(--off-color);
+}
+
+.on-c {
+  border-color: var(--on-color);
+  background-color: var(--on-color);
+}
+
+.operator {
+  border-color: var(--operator-color);
+  background-color: var(--operator-color);
+}
+
+.zero {
+  min-width: 131px;
 }
