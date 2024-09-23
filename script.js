@@ -33,8 +33,10 @@ operatorButtons.forEach((operatorButton) => {
         (buttonClass) => buttonClass != "operator" && buttonClass != "button"
       )
       .toString();
+
     currentOperator = operatorWord;
     console.log(operate(currentOperator, 1, 2));
+    firstOperand = displayNumber;
     operate(currentOperator, firstOperand, secondOperand);
   });
 });
@@ -111,19 +113,31 @@ function removeLeadingZeros(display) {
   return display;
 }
 
+function round(value) {
+  value = value.toString();
+  let valueSplitAtDecimal = value.split(".");
+  let beforeDecimal = valueSplitAtDecimal[0].toString();
+  let roundedDecimals = 10 - beforeDecimal.length;
+  if (roundedDecimals >= 0) {
+    return Number(
+      Math.round(value + "e" + roundedDecimals) + "e-" + roundedDecimals
+    );
+  }
+}
+
 function updateDisplay(button) {
   if (
     typeof button === "number" &&
     displayString.toString().replace(".", "").length < MAX_DIGITS
   ) {
     displayString += button.toString();
-  }
-  if (button === "decimal" && !hasDecimal) {
+  } else if (button === "decimal" && !hasDecimal) {
     hasDecimal = true;
     displayString += ".";
   }
+
   displayString = removeLeadingZeros(displayString);
-  displayNumber = parseFloat(displayString);
+  displayNumber = round(parseFloat(displayString));
   display.textContent = displayString;
   console.log(displayString);
   console.log(displayNumber);
@@ -157,3 +171,4 @@ second operand or another operator to overwrite the selected operator
 equals to go to the behaviour at *1, pressing equals repeatedly
 
 */
+// console.log(round(1.9999999999))
