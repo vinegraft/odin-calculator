@@ -86,9 +86,9 @@ function convertWordToInteger(word) {
 }
 
 function removeLeadingZeros(display) {
-  for (i = 0; i < display.length; i++) {
-    if (display[i] === "0" && display[i + 1] != ".") {
-      let currentString = display;
+  let currentString = display;
+  for (i = 0; i < display.length && display.length > 1; i++) {
+    if (display[i] === "0" && display[i + 1] !== ".") {
       display = currentString.replace("0", "");
     } else if (display[i] != "0") {
       break;
@@ -109,6 +109,7 @@ function updateDisplay(button) {
     hasDecimal = true;
     displayValue += ".";
   }
+  displayValue = removeLeadingZeros(displayValue);
   numberValue = parseFloat(displayValue);
   display.textContent = displayValue;
   console.log(displayValue);
