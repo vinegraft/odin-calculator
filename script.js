@@ -1,12 +1,10 @@
-// Three slashes (///) indicates pseudocode
-
 const MAX_DIGITS = 10;
 let hasDecimal = false;
-let displayValue = "0";
-let numberValue = 0;
-let operand1 = null;
-let operand2 = null;
-let operator = null;
+let displayString = "0";
+let displayNumber = 0;
+let firstOperand = null;
+let secondOperand = null;
+let currentOperator = null;
 
 const display = document.querySelector(".display");
 
@@ -35,7 +33,9 @@ operatorButtons.forEach((operatorButton) => {
         (buttonClass) => buttonClass != "operator" && buttonClass != "button"
       )
       .toString();
-    console.log(operate(operatorWord, 1, 2));
+    currentOperator = operatorWord;
+    console.log(operate(currentOperator, 1, 2));
+    operate(currentOperator, firstOperand, secondOperand);
   });
 });
 
@@ -114,17 +114,17 @@ function removeLeadingZeros(display) {
 function updateDisplay(button) {
   if (
     typeof button === "number" &&
-    displayValue.toString().replace(".", "").length < MAX_DIGITS
+    displayString.toString().replace(".", "").length < MAX_DIGITS
   ) {
-    displayValue += button.toString();
+    displayString += button.toString();
   }
   if (button === "decimal" && !hasDecimal) {
     hasDecimal = true;
-    displayValue += ".";
+    displayString += ".";
   }
-  displayValue = removeLeadingZeros(displayValue);
-  numberValue = parseFloat(displayValue);
-  display.textContent = displayValue;
-  console.log(displayValue);
-  console.log(numberValue);
+  displayString = removeLeadingZeros(displayString);
+  displayNumber = parseFloat(displayString);
+  display.textContent = displayString;
+  console.log(displayString);
+  console.log(displayNumber);
 }
