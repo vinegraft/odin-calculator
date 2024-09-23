@@ -5,6 +5,7 @@ let displayNumber = 0;
 let firstOperand = null;
 let secondOperand = null;
 let currentOperator = null;
+let readyForNewNumber = true;
 
 const display = document.querySelector(".display");
 
@@ -34,10 +35,17 @@ operatorButtons.forEach((operatorButton) => {
       )
       .toString();
 
-    currentOperator = operatorWord;
-    console.log(operate(currentOperator, 1, 2));
-    firstOperand = displayNumber;
-    operate(currentOperator, firstOperand, secondOperand);
+    firstOperand = secondOperand;
+    secondOperand = displayNumber;
+    displayNumber = 0;
+    displayString = "0";
+
+    if (operatorWord != "equals") {
+      currentOperator = operatorWord;
+    } else if (operatorWord === "equals") {
+      updateDisplay("equals");
+    }
+    console.log(operate(currentOperator, firstOperand, secondOperand));
   });
 });
 
@@ -62,13 +70,13 @@ function divide(a, b) {
 
 function operate(op, a, b) {
   if (op === "add") {
-    return add(a, b);
+    return round(add(a, b));
   } else if (op === "subtract") {
-    return subtract(a, b);
+    return round(subtract(a, b));
   } else if (op === "multiply") {
-    return multiply(a, b);
+    return round(multiply(a, b));
   } else if (op === "divide") {
-    return divide(a, b);
+    return round(divide(a, b));
   } else {
     return null;
   }
@@ -134,6 +142,8 @@ function updateDisplay(button) {
   } else if (button === "decimal" && !hasDecimal) {
     hasDecimal = true;
     displayString += ".";
+  } else if (button === "equals") {
+    displayString = operate(currentOperator, firstOperand, secondOperand);
   }
 
   displayString = removeLeadingZeros(displayString);
@@ -181,4 +191,3 @@ second operand or another operator to overwrite the selected operator
 equals to go to the behaviour at *1, pressing equals repeatedly
 
 */
-// console.log(round(1.9999999999))
