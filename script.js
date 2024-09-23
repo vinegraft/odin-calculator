@@ -9,6 +9,7 @@ let operand2 = null;
 let operator = null;
 
 const display = document.querySelector(".display");
+
 const numberButtons = document.querySelectorAll(".number");
 numberButtons.forEach((numberButton) => {
   numberButton.addEventListener("click", (event) => {
@@ -22,6 +23,19 @@ numberButtons.forEach((numberButton) => {
       numberWord = convertWordToInteger(numberWord);
     }
     updateDisplay(numberWord);
+  });
+});
+
+const operatorButtons = document.querySelectorAll(".operator");
+operatorButtons.forEach((operatorButton) => {
+  operatorButton.addEventListener("click", (event) => {
+    let buttonClasses = Array.from(event.currentTarget.classList);
+    let operatorWord = buttonClasses
+      .filter(
+        (buttonClass) => buttonClass != "operator" && buttonClass != "button"
+      )
+      .toString();
+    console.log(operate(operatorWord, 1, 2));
   });
 });
 
@@ -98,7 +112,6 @@ function removeLeadingZeros(display) {
 }
 
 function updateDisplay(button) {
-  displayValue = removeLeadingZeros(displayValue);
   if (
     typeof button === "number" &&
     displayValue.toString().replace(".", "").length < MAX_DIGITS
