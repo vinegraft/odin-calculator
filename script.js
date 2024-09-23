@@ -2,7 +2,8 @@
 
 const MAX_DIGITS = 10;
 let hasDecimal = false;
-let displayValue = 0;
+let displayValue = "0";
+let numberValue = 0;
 let operand1 = null;
 let operand2 = null;
 let operator = null;
@@ -12,11 +13,15 @@ const numberButtons = document.querySelectorAll(".number");
 numberButtons.forEach((numberButton) => {
   numberButton.addEventListener("click", (event) => {
     let buttonClasses = Array.from(event.currentTarget.classList);
-    let numberWord = buttonClasses.filter(
-      (buttonClass) => buttonClass != "number" && buttonClass != "button"
-    );
-    numberWord = convertWordToInteger(numberWord.toString());
-    populateDisplay(numberWord);
+    let numberWord = buttonClasses
+      .filter(
+        (buttonClass) => buttonClass != "number" && buttonClass != "button"
+      )
+      .toString();
+    if (numberWord != "decimal") {
+      numberWord = convertWordToInteger(numberWord);
+    }
+    updateDisplay(numberWord);
   });
 });
 
@@ -80,16 +85,32 @@ function convertWordToInteger(word) {
   }
 }
 
-function populateDisplay(button) {
-  if (typeof button === "number") {
-    displayValue = displayValue.toString();
+function removeLeadingZeros(display) {
+  for (i = 0; i < display.length; i++) {
+    if (display[i] === "0" && display[i + 1] != ".") {
+      let currentString = display;
+      display = currentString.replace("0", "");
+    } else if (display[i] != "0") {
+      break;
+    }
+  }
+  return display;
+}
+
+function updateDisplay(button) {
+  displayValue = removeLeadingZeros(displayValue);
+  if (
+    typeof button === "number" &&
+    displayValue.toString().replace(".", "").length < MAX_DIGITS
+  ) {
     displayValue += button.toString();
-    display.textContent = displayValue;
-    displayValue = parseFloat(displayValue);
-    //TODO handle leading zeroes and max display digits
   }
   if (button === "decimal" && !hasDecimal) {
-    //TODO handle trailing decimal and zeroes (1. or 1.0 wants? to convert to 1)
     hasDecimal = true;
+    displayValue += ".";
   }
+  numberValue = parseFloat(displayValue);
+  display.textContent = displayValue;
+  console.log(displayValue);
+  console.log(numberValue);
 }
