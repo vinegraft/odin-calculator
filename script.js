@@ -128,3 +128,32 @@ function updateDisplay(button) {
   console.log(displayString);
   console.log(displayNumber);
 }
+
+/*
+
+*how a calculator should handle operations
+
+*it lets the user input a number
+
+*when the user presses an operator it stores the above number as the first 
+operand
+
+*if the user presses another operator before entering the second operand it overwrites
+the old operand, replacing it with the most recently pressed
+
+*it lets the user enter another number (second operand)
+
+*1 if the user presses equals it does the operation and displays result
+
+*2 if the user presses equals again it does the same operation, taking the 
+previous result as the first operand and keeps the previous second operand
+
+*if the user enters a number, an operator, another number, and another operator, it
+operates the first operator and updates the display with the result, using the
+displayed value as the first operand for the next operation. it's waiting for the 
+second operand or another operator to overwrite the selected operator
+
+*it this point the user can enter another number as the second operand, and press
+equals to go to the behaviour at *1, pressing equals repeatedly
+
+*/
