@@ -61,6 +61,18 @@ onClearButton.addEventListener("click", (event) => {
   display.textContent = displayString;
 });
 
+const offButton = document.querySelector(".off");
+offButton.addEventListener("click", (event) => {
+  hasDecimal = false;
+  displayString = "0";
+  displayNumber = 0;
+  firstOperand = null;
+  secondOperand = null;
+  currentOperator = null;
+  readyForNewNumber = true;
+  display.textContent = "";
+});
+
 function add(a, b) {
   return a + b;
 }
