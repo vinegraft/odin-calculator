@@ -6,6 +6,7 @@ let firstOperand = null;
 let secondOperand = null;
 let currentOperator = null;
 let readyForNewNumber = true;
+let isOn = true;
 
 const display = document.querySelector(".display");
 
@@ -42,7 +43,7 @@ operatorButtons.forEach((operatorButton) => {
 
     if (operatorWord != "equals") {
       currentOperator = operatorWord;
-      display.textContent = "0";
+      updateDisplay("0");
     } else if (operatorWord === "equals") {
       processInput("equals");
     }
@@ -58,7 +59,8 @@ onClearButton.addEventListener("click", (event) => {
   secondOperand = null;
   currentOperator = null;
   readyForNewNumber = true;
-  display.textContent = displayString;
+  isOn = true;
+  updateDisplay(displayString);
 });
 
 const offButton = document.querySelector(".off");
@@ -70,7 +72,8 @@ offButton.addEventListener("click", (event) => {
   secondOperand = null;
   currentOperator = null;
   readyForNewNumber = true;
-  display.textContent = "";
+  updateDisplay("");
+  isOn = false;
 });
 
 const signButton = document.querySelector(".sign");
@@ -78,13 +81,19 @@ signButton.addEventListener("click", (event) => {
   if (displayNumber > 0) {
     displayNumber = -displayNumber;
     displayString = displayNumber.toString();
-    display.textContent = displayString;
+    updateDisplay(displayString);
   } else if (displayNumber < 0) {
     displayNumber = Math.abs(displayNumber);
     displayString = displayNumber.toString();
-    display.textContent = displayString;
+    updateDisplay(displayString);
   }
 });
+
+function updateDisplay(string) {
+  if (isOn === true) {
+    display.textContent = string;
+  }
+}
 
 function add(a, b) {
   return a + b;
@@ -185,7 +194,7 @@ function processInput(button) {
 
   displayString = removeLeadingZeros(displayString);
   displayNumber = round(parseFloat(displayString));
-  display.textContent = displayString;
+  updateDisplay(displayString);
   console.log(displayString);
   console.log(displayNumber);
 }
