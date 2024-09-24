@@ -46,11 +46,13 @@ operatorButtons.forEach((operatorButton) => {
 
 const equalsButton = document.querySelector(".equals");
 equalsButton.addEventListener("click", (event) => {
-  firstOperand = secondOperand;
-  secondOperand = displayNumber;
-  displayNumber = 0;
-  displayString = operate(currentOperator, firstOperand, secondOperand);
-  updateDisplay(displayString);
+  if (!(currentOperator === null || secondOperand === null)) {
+    firstOperand = secondOperand;
+    secondOperand = displayNumber;
+    displayNumber = 0;
+    displayString = operate(currentOperator, firstOperand, secondOperand);
+    updateDisplay(displayString);
+  }
 });
 
 const onClearButton = document.querySelector(".on-c");
@@ -91,7 +93,7 @@ signButton.addEventListener("click", (event) => {
 });
 
 function updateDisplay(string) {
-  displayString = string
+  displayString = string;
   displayString = removeLeadingZeros(displayString);
   displayNumber = round(parseFloat(displayString));
   if (isOn === true) {
