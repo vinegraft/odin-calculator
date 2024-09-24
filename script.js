@@ -44,21 +44,20 @@ operatorButtons.forEach((operatorButton) => {
     updateDisplay("0");
     // are we chaining operations?
     if (
-      !(
-        currentOperator === null ||
-        firstOperand === null ||
-        secondOperand === null
-      )
+      currentOperator !== null &&
+      firstOperand !== null &&
+      secondOperand !== null
     ) {
       displayString = operate(currentOperator, firstOperand, secondOperand);
       updateDisplay(displayString);
+      secondOperand = displayNumber;
     }
   });
 });
 
 const equalsButton = document.querySelector(".equals");
 equalsButton.addEventListener("click", (event) => {
-  if ((currentOperator !== null && secondOperand !== null)) {
+  if (currentOperator !== null && secondOperand !== null) {
     firstOperand = secondOperand;
     secondOperand = displayNumber;
     displayNumber = 0;
