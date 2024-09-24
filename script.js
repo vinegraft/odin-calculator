@@ -1,4 +1,3 @@
-//TODO: fix numbers appending to displayed results of operations
 const MAX_DIGITS = 10;
 let hasDecimal = false;
 let displayString = "0";
@@ -7,6 +6,7 @@ let firstOperand = null;
 let secondOperand = null;
 let currentOperator = null;
 let isOn = true;
+let isDisplayingResult = false;
 
 const display = document.querySelector(".display");
 
@@ -43,7 +43,13 @@ operatorButtons.forEach((operatorButton) => {
     displayString = "0";
     updateDisplay("0");
     // are we chaining operations?
-    if (!(currentOperator === null || firstOperand === null || secondOperand ===null )) {
+    if (
+      !(
+        currentOperator === null ||
+        firstOperand === null ||
+        secondOperand === null
+      )
+    ) {
       displayString = operate(currentOperator, firstOperand, secondOperand);
       updateDisplay(displayString);
     }
@@ -128,6 +134,7 @@ function divide(a, b) {
 }
 
 function operate(op, a, b) {
+  isDisplayingResult = true;
   if (op === "add") {
     return round(add(a, b));
   } else if (op === "subtract") {
@@ -193,6 +200,11 @@ function round(value) {
 }
 
 function handleNumberInput(button) {
+  if (isDisplayingResult === true) {
+    displayString = "0";
+    displayNumber = 0;
+    isDisplayingResult = false;
+  }
   if (
     typeof button === "number" &&
     displayString.toString().replace(".", "").length < MAX_DIGITS
