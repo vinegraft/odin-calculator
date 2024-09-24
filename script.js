@@ -6,6 +6,7 @@ let firstOperand = null;
 let secondOperand = null;
 let currentOperator = null;
 let readyForNewNumber = true;
+let isOn = true;
 
 const display = document.querySelector(".display");
 
@@ -21,7 +22,7 @@ numberButtons.forEach((numberButton) => {
     if (numberWord != "decimal") {
       numberWord = convertWordToInteger(numberWord);
     }
-    updateDisplay(numberWord);
+    processInput(numberWord);
   });
 });
 
@@ -42,10 +43,10 @@ operatorButtons.forEach((operatorButton) => {
 
     if (operatorWord != "equals") {
       currentOperator = operatorWord;
+      updateDisplay("0");
     } else if (operatorWord === "equals") {
-      updateDisplay("equals");
+      processInput("equals");
     }
-    console.log(operate(currentOperator, firstOperand, secondOperand));
   });
 });
 
@@ -58,7 +59,8 @@ onClearButton.addEventListener("click", (event) => {
   secondOperand = null;
   currentOperator = null;
   readyForNewNumber = true;
-  display.textContent = displayString;
+  isOn = true;
+  updateDisplay(displayString);
 });
 
 const offButton = document.querySelector(".off");
@@ -70,8 +72,28 @@ offButton.addEventListener("click", (event) => {
   secondOperand = null;
   currentOperator = null;
   readyForNewNumber = true;
-  display.textContent = "";
+  updateDisplay("");
+  isOn = false;
 });
+
+const signButton = document.querySelector(".sign");
+signButton.addEventListener("click", (event) => {
+  if (displayNumber > 0) {
+    displayNumber = -displayNumber;
+    displayString = displayNumber.toString();
+    updateDisplay(displayString);
+  } else if (displayNumber < 0) {
+    displayNumber = Math.abs(displayNumber);
+    displayString = displayNumber.toString();
+    updateDisplay(displayString);
+  }
+});
+
+function updateDisplay(string) {
+  if (isOn === true) {
+    display.textContent = string;
+  }
+}
 
 function add(a, b) {
   return a + b;
@@ -157,7 +179,7 @@ function round(value) {
   }
 }
 
-function updateDisplay(button) {
+function processInput(button) {
   if (
     typeof button === "number" &&
     displayString.toString().replace(".", "").length < MAX_DIGITS
@@ -172,22 +194,12 @@ function updateDisplay(button) {
 
   displayString = removeLeadingZeros(displayString);
   displayNumber = round(parseFloat(displayString));
-  display.textContent = displayString;
+  updateDisplay(displayString);
   console.log(displayString);
   console.log(displayNumber);
 }
 
 /*
-
-****what we are tackling right now
-
-1. user inputs a number (display show inputed number) 
-user presses an operator (display stays the same)
-user inputs another number (display shows new inputed number)
-user presses equals (display shows result)
-
-user must input a new number to begin over again from 1.
-
 
 *****how a calculator should handle operations
 
