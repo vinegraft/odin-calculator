@@ -37,16 +37,20 @@ operatorButtons.forEach((operatorButton) => {
 
     firstOperand = secondOperand;
     secondOperand = displayNumber;
+    currentOperator = operatorWord;
     displayNumber = 0;
     displayString = "0";
-
-    if (operatorWord != "equals") {
-      currentOperator = operatorWord;
-      updateDisplay("0");
-    } else if (operatorWord === "equals") {
-      processInput("equals");
-    }
+    updateDisplay("0");
   });
+});
+
+const equalsButton = document.querySelector(".equals");
+equalsButton.addEventListener("click", (event) => {
+  firstOperand = secondOperand;
+  secondOperand = displayNumber;
+  displayNumber = 0;
+  displayString = "0";
+  processInput("equals");
 });
 
 const onClearButton = document.querySelector(".on-c");

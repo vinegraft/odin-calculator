@@ -116,7 +116,7 @@ body {
   background-color: var(--on-color);
 }
 
-.operator, .sign {
+.operator, .sign, .equals {
   border-color: var(--operator-color);
   background-color: var(--operator-color);
 }
