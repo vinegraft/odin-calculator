@@ -5,6 +5,7 @@ let displayNumber = 0;
 let firstOperand = null;
 let secondOperand = null;
 let currentOperator = null;
+let readyForNewNumber = true;
 
 const display = document.querySelector(".display");
 
@@ -33,10 +34,31 @@ operatorButtons.forEach((operatorButton) => {
         (buttonClass) => buttonClass != "operator" && buttonClass != "button"
       )
       .toString();
-    currentOperator = operatorWord;
-    console.log(operate(currentOperator, 1, 2));
-    operate(currentOperator, firstOperand, secondOperand);
+
+    firstOperand = secondOperand;
+    secondOperand = displayNumber;
+    displayNumber = 0;
+    displayString = "0";
+
+    if (operatorWord != "equals") {
+      currentOperator = operatorWord;
+    } else if (operatorWord === "equals") {
+      updateDisplay("equals");
+    }
+    console.log(operate(currentOperator, firstOperand, secondOperand));
   });
+});
+
+const onClearButton = document.querySelector(".on-c");
+onClearButton.addEventListener("click", (event) => {
+  hasDecimal = false;
+  displayString = "0";
+  displayNumber = 0;
+  firstOperand = null;
+  secondOperand = null;
+  currentOperator = null;
+  readyForNewNumber = true;
+  display.textContent = displayString;
 });
 
 function add(a, b) {
@@ -60,13 +82,13 @@ function divide(a, b) {
 
 function operate(op, a, b) {
   if (op === "add") {
-    return add(a, b);
+    return round(add(a, b));
   } else if (op === "subtract") {
-    return subtract(a, b);
+    return round(subtract(a, b));
   } else if (op === "multiply") {
-    return multiply(a, b);
+    return round(multiply(a, b));
   } else if (op === "divide") {
-    return divide(a, b);
+    return round(divide(a, b));
   } else {
     return null;
   }
@@ -111,19 +133,33 @@ function removeLeadingZeros(display) {
   return display;
 }
 
+function round(value) {
+  value = value.toString();
+  let valueSplitAtDecimal = value.split(".");
+  let beforeDecimal = valueSplitAtDecimal[0].toString();
+  let roundedDecimals = 10 - beforeDecimal.length;
+  if (roundedDecimals >= 0) {
+    return Number(
+      Math.round(value + "e" + roundedDecimals) + "e-" + roundedDecimals
+    );
+  }
+}
+
 function updateDisplay(button) {
   if (
     typeof button === "number" &&
     displayString.toString().replace(".", "").length < MAX_DIGITS
   ) {
     displayString += button.toString();
-  }
-  if (button === "decimal" && !hasDecimal) {
+  } else if (button === "decimal" && !hasDecimal) {
     hasDecimal = true;
     displayString += ".";
+  } else if (button === "equals") {
+    displayString = operate(currentOperator, firstOperand, secondOperand);
   }
+
   displayString = removeLeadingZeros(displayString);
-  displayNumber = parseFloat(displayString);
+  displayNumber = round(parseFloat(displayString));
   display.textContent = displayString;
   console.log(displayString);
   console.log(displayNumber);
@@ -131,7 +167,17 @@ function updateDisplay(button) {
 
 /*
 
-*how a calculator should handle operations
+****what we are tackling right now
+
+1. user inputs a number (display show inputed number) 
+user presses an operator (display stays the same)
+user inputs another number (display shows new inputed number)
+user presses equals (display shows result)
+
+user must input a new number to begin over again from 1.
+
+
+*****how a calculator should handle operations
 
 *it lets the user input a number
 
