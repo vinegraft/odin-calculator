@@ -42,6 +42,7 @@ body {
 }
 
 .calculator {
+  flex-shrink: 0;
   flex-direction: column;
   align-items: stretch;
   box-shadow: #111 1px 1px 4px;
@@ -56,6 +57,7 @@ body {
 
 .display {
   flex: 0.16666;
+  flex-shrink: 0;
   justify-content: flex-end;
   align-items: center;
   margin: 8px;
@@ -66,6 +68,7 @@ body {
   border-radius: 8px;
   background-color: var(--screen-color);
   padding-right: 6px;
+  height: 67px;
   color: var(--display-color);
   font-size: 2em;
   font-family: "DSEG", monospace;
@@ -116,7 +119,8 @@ body {
   background-color: var(--on-color);
 }
 
-.operator, .sign {
+.operator,
+.sign {
   border-color: var(--operator-color);
   background-color: var(--operator-color);
 }
