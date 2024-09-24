@@ -21,7 +21,7 @@ numberButtons.forEach((numberButton) => {
     if (numberWord != "decimal") {
       numberWord = convertWordToInteger(numberWord);
     }
-    processInput(numberWord);
+    handleNumberInput(numberWord);
   });
 });
 
@@ -50,7 +50,8 @@ equalsButton.addEventListener("click", (event) => {
   secondOperand = displayNumber;
   displayNumber = 0;
   displayString = "0";
-  processInput("equals");
+  displayString = operate(currentOperator, firstOperand, secondOperand);
+  updateDisplay(displayString);
 });
 
 const onClearButton = document.querySelector(".on-c");
@@ -91,8 +92,10 @@ signButton.addEventListener("click", (event) => {
 });
 
 function updateDisplay(string) {
+  displayString = removeLeadingZeros(displayString);
+  displayNumber = round(parseFloat(displayString));
   if (isOn === true) {
-    display.textContent = string;
+    display.textContent = displayString;
   }
 }
 
@@ -180,7 +183,7 @@ function round(value) {
   }
 }
 
-function processInput(button) {
+function handleNumberInput(button) {
   if (
     typeof button === "number" &&
     displayString.toString().replace(".", "").length < MAX_DIGITS
@@ -189,12 +192,8 @@ function processInput(button) {
   } else if (button === "decimal" && !hasDecimal) {
     hasDecimal = true;
     displayString += ".";
-  } else if (button === "equals") {
-    displayString = operate(currentOperator, firstOperand, secondOperand);
   }
 
-  displayString = removeLeadingZeros(displayString);
-  displayNumber = round(parseFloat(displayString));
   updateDisplay(displayString);
 }
 
