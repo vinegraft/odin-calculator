@@ -49,6 +49,18 @@ operatorButtons.forEach((operatorButton) => {
   });
 });
 
+const onClearButton = document.querySelector(".on-c");
+onClearButton.addEventListener("click", (event) => {
+  hasDecimal = false;
+  displayString = "0";
+  displayNumber = 0;
+  firstOperand = null;
+  secondOperand = null;
+  currentOperator = null;
+  readyForNewNumber = true;
+  display.textContent = displayString;
+});
+
 function add(a, b) {
   return a + b;
 }
