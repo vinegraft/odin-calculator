@@ -1,3 +1,4 @@
+//TODO: fix numbers appending to displayed results of operations
 const MAX_DIGITS = 10;
 let hasDecimal = false;
 let displayString = "0";
@@ -41,6 +42,11 @@ operatorButtons.forEach((operatorButton) => {
     displayNumber = 0;
     displayString = "0";
     updateDisplay("0");
+    // are we chaining operations?
+    if (!(currentOperator === null || firstOperand === null || secondOperand ===null )) {
+      displayString = operate(currentOperator, firstOperand, secondOperand);
+      updateDisplay(displayString);
+    }
   });
 });
 
