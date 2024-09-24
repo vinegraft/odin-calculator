@@ -5,7 +5,6 @@ let displayNumber = 0;
 let firstOperand = null;
 let secondOperand = null;
 let currentOperator = null;
-let readyForNewNumber = true;
 let isOn = true;
 
 const display = document.querySelector(".display");
@@ -58,7 +57,6 @@ onClearButton.addEventListener("click", (event) => {
   firstOperand = null;
   secondOperand = null;
   currentOperator = null;
-  readyForNewNumber = true;
   isOn = true;
   updateDisplay(displayString);
 });
@@ -71,7 +69,6 @@ offButton.addEventListener("click", (event) => {
   firstOperand = null;
   secondOperand = null;
   currentOperator = null;
-  readyForNewNumber = true;
   updateDisplay("");
   isOn = false;
 });
@@ -195,8 +192,6 @@ function processInput(button) {
   displayString = removeLeadingZeros(displayString);
   displayNumber = round(parseFloat(displayString));
   updateDisplay(displayString);
-  console.log(displayString);
-  console.log(displayNumber);
 }
 
 /*
