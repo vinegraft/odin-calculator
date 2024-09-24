@@ -49,7 +49,6 @@ equalsButton.addEventListener("click", (event) => {
   firstOperand = secondOperand;
   secondOperand = displayNumber;
   displayNumber = 0;
-  displayString = "0";
   displayString = operate(currentOperator, firstOperand, secondOperand);
   updateDisplay(displayString);
 });
