@@ -5,8 +5,8 @@ let displayNumber = 0;
 let firstOperand = null;
 let secondOperand = null;
 let currentOperator = null;
-let readyForNewNumber = true;
 let isOn = true;
+let isDisplayingResult = false;
 
 const display = document.querySelector(".display");
 
@@ -22,7 +22,7 @@ numberButtons.forEach((numberButton) => {
     if (numberWord != "decimal") {
       numberWord = convertWordToInteger(numberWord);
     }
-    processInput(numberWord);
+    handleNumberInput(numberWord);
   });
 });
 
@@ -38,16 +38,33 @@ operatorButtons.forEach((operatorButton) => {
 
     firstOperand = secondOperand;
     secondOperand = displayNumber;
+    currentOperator = operatorWord;
     displayNumber = 0;
     displayString = "0";
-
-    if (operatorWord != "equals") {
-      currentOperator = operatorWord;
-      updateDisplay("0");
-    } else if (operatorWord === "equals") {
-      processInput("equals");
+    updateDisplay("0");
+    // are we chaining operations?
+    if (
+      currentOperator !== null &&
+      firstOperand !== null &&
+      secondOperand !== null
+    ) {
+      displayString = operate(currentOperator, firstOperand, secondOperand);
+      updateDisplay(displayString);
+      secondOperand = displayNumber;
     }
   });
+});
+
+const equalsButton = document.querySelector(".equals");
+equalsButton.addEventListener("click", (event) => {
+  if (currentOperator !== null && secondOperand !== null) {
+    firstOperand = secondOperand;
+    secondOperand = displayNumber;
+    displayNumber = 0;
+    displayString = operate(currentOperator, firstOperand, secondOperand);
+    updateDisplay(displayString);
+    currentOperator = null;
+  }
 });
 
 const onClearButton = document.querySelector(".on-c");
@@ -58,7 +75,6 @@ onClearButton.addEventListener("click", (event) => {
   firstOperand = null;
   secondOperand = null;
   currentOperator = null;
-  readyForNewNumber = true;
   isOn = true;
   updateDisplay(displayString);
 });
@@ -71,7 +87,6 @@ offButton.addEventListener("click", (event) => {
   firstOperand = null;
   secondOperand = null;
   currentOperator = null;
-  readyForNewNumber = true;
   updateDisplay("");
   isOn = false;
 });
@@ -90,8 +105,11 @@ signButton.addEventListener("click", (event) => {
 });
 
 function updateDisplay(string) {
+  displayString = string;
+  displayString = removeLeadingZeros(displayString);
+  displayNumber = round(parseFloat(displayString));
   if (isOn === true) {
-    display.textContent = string;
+    display.textContent = displayString;
   }
 }
 
@@ -109,12 +127,14 @@ function multiply(a, b) {
 
 function divide(a, b) {
   if (b === 0) {
+    display.textContent = "error";
     return null;
   }
   return a / b;
 }
 
 function operate(op, a, b) {
+  isDisplayingResult = true;
   if (op === "add") {
     return round(add(a, b));
   } else if (op === "subtract") {
@@ -179,7 +199,12 @@ function round(value) {
   }
 }
 
-function processInput(button) {
+function handleNumberInput(button) {
+  if (isDisplayingResult === true) {
+    displayString = "0";
+    displayNumber = 0;
+    isDisplayingResult = false;
+  }
   if (
     typeof button === "number" &&
     displayString.toString().replace(".", "").length < MAX_DIGITS
@@ -188,15 +213,9 @@ function processInput(button) {
   } else if (button === "decimal" && !hasDecimal) {
     hasDecimal = true;
     displayString += ".";
-  } else if (button === "equals") {
-    displayString = operate(currentOperator, firstOperand, secondOperand);
   }
 
-  displayString = removeLeadingZeros(displayString);
-  displayNumber = round(parseFloat(displayString));
   updateDisplay(displayString);
-  console.log(displayString);
-  console.log(displayNumber);
 }
 
 /*
