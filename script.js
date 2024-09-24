@@ -192,16 +192,6 @@ function updateDisplay(button) {
 
 /*
 
-****what we are tackling right now
-
-1. user inputs a number (display show inputed number) 
-user presses an operator (display stays the same)
-user inputs another number (display shows new inputed number)
-user presses equals (display shows result)
-
-user must input a new number to begin over again from 1.
-
-
 *****how a calculator should handle operations
 
 *it lets the user input a number
