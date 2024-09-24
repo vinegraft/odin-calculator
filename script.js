@@ -42,10 +42,10 @@ operatorButtons.forEach((operatorButton) => {
 
     if (operatorWord != "equals") {
       currentOperator = operatorWord;
+      display.textContent = "0";
     } else if (operatorWord === "equals") {
       updateDisplay("equals");
     }
-    console.log(operate(currentOperator, firstOperand, secondOperand));
   });
 });
 
