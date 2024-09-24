@@ -58,12 +58,13 @@ operatorButtons.forEach((operatorButton) => {
 
 const equalsButton = document.querySelector(".equals");
 equalsButton.addEventListener("click", (event) => {
-  if (!(currentOperator === null || secondOperand === null)) {
+  if ((currentOperator !== null && secondOperand !== null)) {
     firstOperand = secondOperand;
     secondOperand = displayNumber;
     displayNumber = 0;
     displayString = operate(currentOperator, firstOperand, secondOperand);
     updateDisplay(displayString);
+    currentOperator = null;
   }
 });
 
