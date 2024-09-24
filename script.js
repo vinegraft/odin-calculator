@@ -92,6 +92,7 @@ signButton.addEventListener("click", (event) => {
 });
 
 function updateDisplay(string) {
+  displayString = string
   displayString = removeLeadingZeros(displayString);
   displayNumber = round(parseFloat(displayString));
   if (isOn === true) {
@@ -113,6 +114,7 @@ function multiply(a, b) {
 
 function divide(a, b) {
   if (b === 0) {
+    display.textContent = "error";
     return null;
   }
   return a / b;
