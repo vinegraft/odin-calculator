@@ -73,6 +73,19 @@ offButton.addEventListener("click", (event) => {
   display.textContent = "";
 });
 
+const signButton = document.querySelector(".sign");
+signButton.addEventListener("click", (event) => {
+  if (displayNumber > 0) {
+    displayNumber = -displayNumber;
+    displayString = displayNumber.toString();
+    display.textContent = displayString;
+  } else if (displayNumber < 0) {
+    displayNumber = Math.abs(displayNumber);
+    displayString = displayNumber.toString();
+    display.textContent = displayString;
+  }
+});
+
 function add(a, b) {
   return a + b;
 }
