@@ -21,7 +21,7 @@ numberButtons.forEach((numberButton) => {
     if (numberWord != "decimal") {
       numberWord = convertWordToInteger(numberWord);
     }
-    updateDisplay(numberWord);
+    processInput(numberWord);
   });
 });
 
@@ -44,7 +44,7 @@ operatorButtons.forEach((operatorButton) => {
       currentOperator = operatorWord;
       display.textContent = "0";
     } else if (operatorWord === "equals") {
-      updateDisplay("equals");
+      processInput("equals");
     }
   });
 });
@@ -170,7 +170,7 @@ function round(value) {
   }
 }
 
-function updateDisplay(button) {
+function processInput(button) {
   if (
     typeof button === "number" &&
     displayString.toString().replace(".", "").length < MAX_DIGITS
