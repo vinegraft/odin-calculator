@@ -1,3 +1,4 @@
+//TODO: fix operator buttons causing recursive operations on multiple presses
 const MAX_DIGITS = 10;
 let hasDecimal = false;
 let displayString = "0";
