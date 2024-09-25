@@ -1,4 +1,3 @@
-//TODO: fix operator buttons causing recursive operations on multiple presses
 const MAX_DIGITS = 10;
 let hasDecimal = false;
 let displayString = "0";
@@ -36,18 +35,23 @@ operatorButtons.forEach((operatorButton) => {
         (buttonClass) => buttonClass != "operator" && buttonClass != "button"
       )
       .toString();
-
-    firstOperand = secondOperand;
-    secondOperand = displayNumber;
-    currentOperator = operatorWord;
-    displayNumber = 0;
-    displayString = "0";
-    updateDisplay("0");
+    // prevent recursive operating on multiple button presses
+    if (isDisplayingResult === true) {
+      currentOperator = operatorWord;
+    } else {
+      firstOperand = secondOperand;
+      secondOperand = displayNumber;
+      currentOperator = operatorWord;
+      displayNumber = 0;
+      displayString = "0";
+      updateDisplay("0");
+    }
     // are we chaining operations?
     if (
       currentOperator !== null &&
       firstOperand !== null &&
-      secondOperand !== null
+      secondOperand !== null &&
+      isDisplayingResult === false //user has entered a new operand
     ) {
       displayString = operate(currentOperator, firstOperand, secondOperand);
       updateDisplay(displayString);
